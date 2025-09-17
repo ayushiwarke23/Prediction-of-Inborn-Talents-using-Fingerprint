@@ -1,0 +1,115 @@
+<html>
+<head>
+    <title>SMART DERM</title>
+    <style>
+        /* Reset & Base */
+        * {
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            background-color: #0f172a; /* dark slate background */
+            color: #e2e8f0; /* light text */
+        }
+        a {
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        /* Navbar */
+        .nav {
+            background: linear-gradient(90deg, #2563eb, #1e3a8a);
+            padding: 15px 0;
+            text-align: center;
+            font-size: 20px;
+        }
+        .nav a {
+            color: #f8fafc;
+            margin: 0 20px;
+            font-weight: bold;
+        }
+        .nav a:hover {
+            color: #38bdf8;
+        }
+        /* Content */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #f1f5f9;
+        }
+        p {
+            color: #cbd5e1;
+        }
+        /* Buttons */
+        button, input[type=submit] {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover, input[type=submit]:hover {
+            background-color: #1d4ed8;
+        }
+        /* Forms */
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background-color: #1e293b;
+            color: #f1f5f9;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #1e293b;
+        }
+        table th, table td {
+            border: 1px solid #334155;
+            padding: 12px;
+            text-align: center;
+        }
+        table th {
+            background-color: #2563eb;
+            color: white;
+        }
+        table tr:nth-child(even) {
+            background-color: #0f172a;
+        }
+        img {
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        {% if user.is_authenticated %}
+            Welcome, {{ user.username }} |
+            <a href="{% url 'ulogout' %}">LOGOUT</a>
+            <a href="{% url 'addfingerprint' %}">Add Fingerprints</a>
+        {% else %}
+            <a href="{% url 'ulogin' %}">LOGIN</a>
+            <a href="{% url 'signup' %}">SIGNUP</a>
+        {% endif %}
+    </div>
+
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

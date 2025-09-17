@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Upload Fingerprint Images</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            {% for field_name, display_name in fingers.items %}
+                <div>
+                    <label>{{ display_name }}</label>
+                    <input type="file" name="{{ field_name }}">
+                </div>
+            {% endfor %}
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if msg %}
+        <p>{{ msg }}</p>
+    {% endif %}
+
+    {% if user_images %}
+        <h3>Your Fingerprints & Features</h3>
+        <table>
+            <tr>
+                <th>Finger</th>
+                <th>Original</th>
+                <th>Preprocessed</th>
+                <th>Minutiae Endings</th>
+                <th>Minutiae Bifurcations</th>
+                <th>Ridge Density</th>
+                <th>Core (x,y)</th>
+                <th>Delta (x,y)</th>
+                <th>Ridge Count</th>
+            </tr>
+            {% for img in user_images %}
+            <tr>
+                <td>{{ img.finger_name }}</td>
+                <td><img src="{{ img.image.url }}" width="100"></td>
+                <td><img src="{{ img.processed_image.url }}" width="100"></td>
+                <td>{{ img.minutiae_endings }}</td>
+                <td>{{ img.minutiae_bifurcations }}</td>
+                <td>{{ img.ridge_density|floatformat:3 }}</td>
+                <td>({{ img.core_x|floatformat:1 }}, {{ img.core_y|floatformat:1 }})</td>
+                <td>({{ img.delta_x|floatformat:1 }}, {{ img.delta_y|floatformat:1 }})</td>
+                <td>{{ img.ridge_count_core_delta }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
